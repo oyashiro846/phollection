@@ -1,0 +1,21 @@
+{
+    "name": "oyashiro846/php_collection",
+    "description": "PHP の標準配列だけで Scala のようなコレクション操作を扱えるようにする軽量ユーティリティです",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Oyashiro846\\PhpCollection\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yashiro Hyrie",
+            "email": "243130362+oyashiro846@users.noreply.github.com"
+        }
+    ],
+    "require-dev": {
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-strict-rules": "^2.0"
+    }
+}
