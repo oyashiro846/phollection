@@ -84,6 +84,7 @@ fabric.properties
 .idea/modules.xml
 .idea/php_collection.iml
 .idea/vcs.xml
+.idea/php.xml
 
 ### Composer template
 composer.phar
