@@ -8,6 +8,11 @@
             "Oyashiro846\\PhpCollection\\": "src/"
         }
     },
+    "autoload-dev": {
+      "psr-4": {
+        "Oyashiro846\\PhpCollection\\": "tests/"
+      }
+    },
     "authors": [
         {
             "name": "Yashiro Hyrie",
@@ -16,6 +21,7 @@
     ],
     "require-dev": {
         "phpstan/phpstan": "^2.1",
-        "phpstan/phpstan-strict-rules": "^2.0"
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpunit/phpunit": "^12.4"
     }
 }

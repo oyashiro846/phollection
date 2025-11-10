@@ -1,4 +1,4 @@
-name: Lint
+name: Check
 
 on:
   pull_request:
@@ -10,7 +10,7 @@ on:
       - 'composer.lock'
 
 jobs:
-  lint:
+  checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,3 +29,6 @@ jobs:
 
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse -c phpstan.neon
+
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit tests
