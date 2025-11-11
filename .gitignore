@@ -108,3 +108,6 @@ composer.phar
 
 # Build data
 /build/
+
+### PHPStan
+.php-cs-fixer.cache

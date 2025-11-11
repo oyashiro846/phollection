@@ -3,6 +3,9 @@
     "description": "PHP の標準配列だけで Scala のようなコレクション操作を扱えるようにする軽量ユーティリティです",
     "type": "library",
     "license": "MIT",
+    "require": {
+      "php": ">=8.4"
+    },
     "autoload": {
         "psr-4": {
             "Oyashiro846\\PhpCollection\\": "src/"
@@ -22,6 +25,7 @@
     "require-dev": {
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-strict-rules": "^2.0",
-        "phpunit/phpunit": "^12.4"
+        "phpunit/phpunit": "^12.4",
+        "friendsofphp/php-cs-fixer": "^3.89"
     }
 }
