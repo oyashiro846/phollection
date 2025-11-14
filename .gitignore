@@ -80,6 +80,7 @@ fabric.properties
 # Others
 .idea/codeStyles/
 .idea/.gitignore
+.idea/inspectionProfiles/
 .idea/misc.xml
 .idea/modules.xml
 .idea/php_collection.iml
