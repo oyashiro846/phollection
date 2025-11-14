@@ -10,6 +10,7 @@ enum Mode
      * @template K of array-key
      * @template V
      * @param list<V>|array<K, V> $input
+     * @return Mode::MODE_LIST|Mode::MODE_ASSOC
      */
     public static function check_mode(Mode $mode, array $input): Mode
     {
