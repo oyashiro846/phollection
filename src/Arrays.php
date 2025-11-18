@@ -12,4 +12,30 @@ namespace Oyashiro846\PhpCollection;
  */
 class Arrays
 {
+    /**
+     * 配列を条件でフィルタします。
+     *
+     * @template K of array-key
+     * @template V
+     *
+     * @param list<V>|array<K, V> $input 対象の配列
+     * @param callable(V, K): bool $callback フィルターする条件
+     * @phpstan-param ($mode is Mode::MODE_LIST ? list<V> :
+     *   ($mode is Mode::MODE_ASSOC ? array<K, V> :
+     *     list<V>|array<K, V>
+     * )) $input
+     * @return list<V>|array<K, V>
+     * @phpstan-return ($mode is Mode::MODE_LIST ? list<V> :
+     *     ($mode is Mode::MODE_ASSOC ? array<K, V>:
+     *       ($input is list<V> ? list<V> :
+     *         array<K, V>
+     *  )))
+     */
+    public static function filter(array $input, callable $callback, Mode $mode = Mode::MODE_AUTO): array
+    {
+        $result = array_filter($input, $callback, ARRAY_FILTER_USE_BOTH);
+
+        return Mode::check_mode($mode, $input) === Mode::MODE_LIST
+            ? array_values($result) : $result;
+    }
 }
