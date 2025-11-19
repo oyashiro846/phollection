@@ -38,4 +38,18 @@ class Arrays
         return Mode::check_mode($mode, $input) === Mode::MODE_LIST
             ? array_values($result) : $result;
     }
+
+    /**
+     * いずれかの要素がコールバック関数を満たすかどうかを調べる
+     *
+     * @template K of array-key
+     * @template V
+     *
+     * @param list<V>|array<K, V> $input 対象の配列
+     * @param callable(V, K): bool $callback フィルターする条件
+     */
+    public static function any(array $input, callable $callback): bool
+    {
+        return array_any($input, $callback);
+    }
 }
