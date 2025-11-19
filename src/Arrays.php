@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Oyashiro846\PhpCollection;
+namespace Oyashiro846\Phollection;
 
 /**
  *  array を連想配列として扱うか、リストとして扱うかを区別するため、各関数では以下のオプションが指定できます。

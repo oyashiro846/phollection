@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Oyashiro846\PhpCollection;
+namespace Oyashiro846\Phollection;
 
 use PHPUnit\Framework\TestCase;
 
