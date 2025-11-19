@@ -73,6 +73,9 @@ class Arrays
             null,
             Mode::check_mode($mode, $input) === Mode::MODE_ASSOC,
         );
+    }
+    
+    /**
      * 配列を変換しつつ、null になった要素を取り除きます。
      *
      * @template K of array-key
