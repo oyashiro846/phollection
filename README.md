@@ -4,14 +4,14 @@
 <img src="https://poser.pugx.org/oyashiro846/{pacakge-name}/license" alt="License">
 
 ## 概要 (Overview)
-`{pacakge-name}` は、PHP の標準配列だけで Scala のようなコレクション操作（`map`, `filter`, `groupBy`, `partition` など）を扱えるようにする軽量ユーティリティです。
+Phollectionは、PHP の標準配列だけで Scala のようなコレクション操作（`map`, `filter`, `groupBy`, `partition` など）を扱えるようにする軽量ユーティリティです。
 [Laravel](https://laravel.com/) の [illuminate/collections](https://github.com/illuminate/collections) のようなメソッドチェーンや独自クラスを導入せず、 array や null だけですべての戻り値を表現します。 
 多くの操作については [Scala Visual Reference](https://superruzafa.github.io/visual-scala-reference/ja/) によって概念を理解できます。
 
 ## インストール (Installation)
 
 ```shell
-composer require oyashiro846/{pacakge-name}
+composer require oyashiro846/phollection
 ```
 
 ## 使い方 (Usage)
