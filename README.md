@@ -1,7 +1,7 @@
 # Phollection
-<img src="https://poser.pugx.org/oyashiro846/{pacakge-name}/v/stable" alt="Latest Stable Version">
-<img src="https://poser.pugx.org/oyashiro846/{pacakge-name}/downloads" alt="Total Downloads">
-<img src="https://poser.pugx.org/oyashiro846/{pacakge-name}/license" alt="License">
+<img src="https://poser.pugx.org/oyashiro846/phollection/v/stable" alt="Latest Stable Version">
+<img src="https://poser.pugx.org/oyashiro846/phollection/downloads" alt="Total Downloads">
+<img src="https://poser.pugx.org/oyashiro846/phollection/license" alt="License">
 
 ## 概要 (Overview)
 Phollectionは、PHP の標準配列だけで Scala のようなコレクション操作（`map`, `filter`, `groupBy`, `partition` など）を扱えるようにする軽量ユーティリティです。
