@@ -1,5 +1,5 @@
 {
-    "name": "oyashiro846/php_collection",
+    "name": "oyashiro846/phollection",
     "description": "PHP の標準配列だけで Scala のようなコレクション操作を扱えるようにする軽量ユーティリティです",
     "type": "library",
     "license": "MIT",
@@ -8,12 +8,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Oyashiro846\\PhpCollection\\": "src/"
+            "Oyashiro846\\Phollection\\": "src/"
         }
     },
     "autoload-dev": {
       "psr-4": {
-        "Oyashiro846\\PhpCollection\\": "tests/"
+        "Oyashiro846\\Phollection\\": "tests/"
       }
     },
     "authors": [
