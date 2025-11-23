@@ -329,4 +329,28 @@ class Arrays
 
         return $result;
     }
+
+    /**
+     * 配列から重複した値を削除する
+     *
+     * @template K of array-key
+     * @template V
+     *
+     * @param list<V>|array<K, V> $input 対象の配列
+     * @phpstan-return ($mode is Mode::MODE_LIST ? list<V> :
+     *     ($mode is Mode::MODE_ASSOC ? array<K, V> :
+     *       ($input is list<V> ? list<V> :
+     *         array<K, V>
+     * )))
+     */
+    public static function unique(
+        array $input,
+        int $flags,
+        Mode $mode = Mode::MODE_AUTO,
+    ): array {
+        $result = \array_unique($input, $flags);
+
+        return Mode::check_mode($mode, $input) === Mode::MODE_LIST
+            ? array_values($result) : $result;
+    }
 }
