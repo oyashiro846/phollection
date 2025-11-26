@@ -345,7 +345,7 @@ class Arrays
      */
     public static function unique(
         array $input,
-        int $flags,
+        int $flags = SORT_REGULAR,
         Mode $mode = Mode::MODE_AUTO,
     ): array {
         $result = \array_unique($input, $flags);
