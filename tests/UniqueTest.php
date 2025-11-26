@@ -24,9 +24,9 @@ final class UniqueTest extends TestCase
 
     public function testUniqueNumericsAssocWithAutoMode(): void
     {
-        $result = Arrays::unique(["a" => 3, "b" => 1, "c" => 4, "d" => 1, "e" => 5], SORT_NUMERIC);
+        $result = Arrays::unique(['a' => 3, 'b' => 1, 'c' => 4, 'd' => 1, 'e' => 5], SORT_NUMERIC);
 
-        $this->assertSame(["a" => 3, "b" => 1, "c" => 4, "e" => 5], $result);
+        $this->assertSame(['a' => 3, 'b' => 1, 'c' => 4, 'e' => 5], $result);
     }
 
     public function testUniqueNumericListWithAssocMode(): void
@@ -38,15 +38,15 @@ final class UniqueTest extends TestCase
 
     public function testUniqueStringListWithListMode(): void
     {
-        $result = Arrays::unique(["3", "1", "4", "1", "5", "9", "2"], SORT_STRING, Mode::MODE_LIST);
+        $result = Arrays::unique(['3', '1', '4', '1', '5', '9', '2'], SORT_STRING, Mode::MODE_LIST);
 
-        $this->assertSame(["3", "1", "4", "5", "9", "2"], $result);
+        $this->assertSame(['3', '1', '4', '5', '9', '2'], $result);
     }
 
     public function testUniqueMixedTypeListWithoutFlagsWithAutoMode(): void
     {
-        $result = Arrays::unique([3, 1, "4", "1", 5, 9, "2", 6, 5.0, 3, "5"]);
+        $result = Arrays::unique([3, 1, '4', '1', 5, 9, '2', 6, 5.0, 3, '5']);
 
-        $this->assertSame([3, 1, "4", 5, 9, "2", 6], $result);
+        $this->assertSame([3, 1, '4', 5, 9, '2', 6], $result);
     }
 }

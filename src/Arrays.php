@@ -348,7 +348,7 @@ class Arrays
         int $flags = SORT_REGULAR,
         Mode $mode = Mode::MODE_AUTO,
     ): array {
-        $result = \array_unique($input, $flags);
+        $result = array_unique($input, $flags);
 
         return Mode::check_mode($mode, $input) === Mode::MODE_LIST
             ? array_values($result) : $result;
