@@ -142,10 +142,10 @@ class Arrays
 
     /**
      * 配列から重複した値を削除する
-     * 
+     *
      * @template K of array-key
      * @template V
-     * 
+     *
      * @param list<V>|array<K, V> $input 対象の配列
      * @phpstan-return ($mode is Mode::MODE_LIST ? list<V> :
      *     ($mode is Mode::MODE_ASSOC ? array<K, V> :
@@ -155,7 +155,7 @@ class Arrays
      */
     public static function unique(
         array $input,
-        int $flags,
+        int $flags = SORT_REGULAR,
         Mode $mode = Mode::MODE_AUTO,
     ): array {
         $result = \array_unique($input, $flags);
