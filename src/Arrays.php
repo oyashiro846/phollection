@@ -345,12 +345,51 @@ class Arrays
      */
     public static function unique(
         array $input,
+        bool $strict = false,
         int $flags = SORT_REGULAR,
         Mode $mode = Mode::MODE_AUTO,
     ): array {
-        $result = array_unique($input, $flags);
+        if ($strict) {
+            $seen   = [];
+            $result = [];
+
+            foreach ($input as $key => $value) {
+                $hash = null;
+
+                if (\is_scalar($value)) {
+                    $type = get_debug_type($value);
+                    $hash = $type . ':' . (string)$value;
+                } elseif (\is_object($value)) {
+                    $hash = 'object:' . spl_object_hash($value);
+                } else {
+                    $hash = 'array:' . serialize($value);
+                }
+
+                if ($hash != null) {
+                    if (!isset($seen[$hash])) {
+                        $seen[$hash]  = true;
+                        $result[$key] = $value;
+                    }
+                } else {
+                    $is_unique = true;
+
+                    foreach ($result as $existingValue) {
+                        if ($value === $existingValue) {
+                            $is_unique = false;
+                            break;
+                        }
+                    }
+
+                    if ($is_unique) {
+                        $result[$key] = $value;
+                    }
+                }
+            }
+        } else {
+            $result = array_unique($input, $flags);
+        }
 
         return Mode::check_mode($mode, $input) === Mode::MODE_LIST
-            ? array_values($result) : $result;
+                ? array_values($result) : $result;
     }
 }

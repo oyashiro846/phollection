@@ -17,28 +17,28 @@ final class UniqueTest extends TestCase
 
     public function testUniqueNumericListWithAutoMode(): void
     {
-        $result = Arrays::unique([3, 1, 4, 1, 5, 9, 2], SORT_NUMERIC);
+        $result = Arrays::unique(input: [3, 1, 4, 1, 5, 9, 2], flags: SORT_NUMERIC);
 
         $this->assertSame([3, 1, 4, 5, 9, 2], $result);
     }
 
     public function testUniqueNumericsAssocWithAutoMode(): void
     {
-        $result = Arrays::unique(['a' => 3, 'b' => 1, 'c' => 4, 'd' => 1, 'e' => 5], SORT_NUMERIC);
+        $result = Arrays::unique(['a' => 3, 'b' => 1, 'c' => 4, 'd' => 1, 'e' => 5], flags: SORT_NUMERIC);
 
         $this->assertSame(['a' => 3, 'b' => 1, 'c' => 4, 'e' => 5], $result);
     }
 
     public function testUniqueNumericListWithAssocMode(): void
     {
-        $result = Arrays::unique([3, 1, 4, 1, 5, 9, 2], SORT_NUMERIC, Mode::MODE_ASSOC);
+        $result = Arrays::unique([3, 1, 4, 1, 5, 9, 2], flags: SORT_NUMERIC, mode: Mode::MODE_ASSOC);
 
         $this->assertSame([0 => 3, 1 => 1, 2 => 4, 4 => 5, 5 => 9, 6 => 2], $result);
     }
 
     public function testUniqueStringListWithListMode(): void
     {
-        $result = Arrays::unique(['3', '1', '4', '1', '5', '9', '2'], SORT_STRING, Mode::MODE_LIST);
+        $result = Arrays::unique(['3', '1', '4', '1', '5', '9', '2'], flags: SORT_STRING, mode: Mode::MODE_LIST);
 
         $this->assertSame(['3', '1', '4', '5', '9', '2'], $result);
     }
@@ -48,5 +48,25 @@ final class UniqueTest extends TestCase
         $result = Arrays::unique([3, 1, '4', '1', 5, 9, '2', 6, 5.0, 3, '5']);
 
         $this->assertSame([3, 1, '4', 5, 9, '2', 6], $result);
+    }
+
+    public function testUniqueStringListWithStrictWithListMode(): void
+    {
+        $result = Arrays::unique(['3', '1', '4', '1', '5', '9', '2'], strict: true, flags: SORT_STRING, mode: Mode::MODE_LIST);
+
+        $this->assertSame(['3', '1', '4', '5', '9', '2'], $result);
+    }
+
+    public function testUniqueObjectWithStrictWithAutoMode(): void
+    {
+        $obj1     = new \stdClass();
+        $obj1->id = 1;
+        $obj2     = new \stdClass();
+        $obj2->id = 1;
+        $obj3     = $obj1;
+
+        $result = Arrays::unique([$obj1, $obj2, $obj3], strict: true);
+
+        $this->assertSame([$obj1, $obj2], $result);
     }
 }
