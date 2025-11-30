@@ -361,7 +361,7 @@ class Arrays
                     $hash = $type . ':' . (string)$value;
                 } elseif (\is_object($value)) {
                     $hash = 'object:' . spl_object_hash($value);
-                } else {
+                } elseif (\is_array($value)) {
                     $hash = 'array:' . serialize($value);
                 }
 
