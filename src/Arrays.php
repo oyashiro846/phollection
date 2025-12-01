@@ -161,10 +161,7 @@ class Arrays
     ): array {
         if (!$strict) {
             $result = array_unique($input, $flags);
-            return Mode::check_mode($mode, $input) === Mode::MODE_LIST
-                ? array_values($result) : $result;
-        }
-        else {
+        } else {
             $seen   = [];
             $result = [];
 
@@ -202,6 +199,7 @@ class Arrays
             }
         }
 
-        return $result;
+        return Mode::check_mode($mode, $input) === Mode::MODE_LIST
+                ? array_values($result) : $result;
     }
 }
