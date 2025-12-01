@@ -159,13 +159,16 @@ class Arrays
         int $flags = SORT_STRING,
         Mode $mode = Mode::MODE_AUTO,
     ): array {
-        if ($strict) {
+        if (!$strict) {
+            $result = array_unique($input, $flags);
+            return Mode::check_mode($mode, $input) === Mode::MODE_LIST
+                ? array_values($result) : $result;
+        }
+        else {
             $seen   = [];
             $result = [];
 
             foreach ($input as $key => $value) {
-                $hash = null;
-
                 if (\is_scalar($value)) {
                     $type = get_debug_type($value);
                     $hash = $type . ':' . (string)$value;
@@ -173,6 +176,8 @@ class Arrays
                     $hash = 'object:' . spl_object_hash($value);
                 } elseif (\is_array($value)) {
                     $hash = 'array:' . serialize($value);
+                } else {
+                    $hash = null;
                 }
 
                 if ($hash !== null) {
@@ -195,10 +200,6 @@ class Arrays
                     }
                 }
             }
-        } else {
-            $result = array_unique($input, $flags);
-            $result = Mode::check_mode($mode, $input) === Mode::MODE_LIST
-                ? array_values($result) : $result;
         }
 
         return $result;
