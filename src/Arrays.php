@@ -373,8 +373,8 @@ class Arrays
                 } else {
                     $is_unique = true;
 
-                    foreach ($result as $existingValue) {
-                        if ($value === $existingValue) {
+                    foreach ($result as $existing_value) {
+                        if ($value === $existing_value) {
                             $is_unique = false;
                             break;
                         }
