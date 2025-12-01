@@ -346,7 +346,7 @@ class Arrays
     public static function unique(
         array $input,
         bool $strict = false,
-        int $flags = SORT_REGULAR,
+        int $flags = SORT_STRING,
         Mode $mode = Mode::MODE_AUTO,
     ): array {
         if ($strict) {
