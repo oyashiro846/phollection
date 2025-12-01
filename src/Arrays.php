@@ -365,7 +365,7 @@ class Arrays
                     $hash = 'array:' . serialize($value);
                 }
 
-                if ($hash != null) {
+                if ($hash !== null) {
                     if (!isset($seen[$hash])) {
                         $seen[$hash]  = true;
                         $result[$key] = $value;
