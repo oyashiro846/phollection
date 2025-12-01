@@ -387,9 +387,10 @@ class Arrays
             }
         } else {
             $result = array_unique($input, $flags);
+            $result = Mode::check_mode($mode, $input) === Mode::MODE_LIST
+                ? array_values($result) : $result;
         }
 
-        return Mode::check_mode($mode, $input) === Mode::MODE_LIST
-                ? array_values($result) : $result;
+        return $result;
     }
 }
