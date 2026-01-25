@@ -35,15 +35,15 @@ class Arrays
     {
         $mode = Mode::check_mode($mode, $input);
 
+        if ($mode === Mode::MODE_ASSOC) {
+            return array_filter($input, $callback, ARRAY_FILTER_USE_BOTH);
+        }
+
         $result = [];
 
         foreach ($input as $key => $value) {
             if ($callback($value, $key)) {
-                if ($mode === Mode::MODE_LIST) {
-                    $result[] = $value;
-                } else {
-                    $result[$key] = $value;
-                }
+                $result[] = $value;
             }
         }
 
