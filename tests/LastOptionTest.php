@@ -53,6 +53,7 @@ final class LastOptionTest extends TestCase
         $input  = [];
         $result = Arrays::last_option($input);
 
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
     }
 
@@ -61,8 +62,7 @@ final class LastOptionTest extends TestCase
         $input  = [1, 2, null];
         $result = Arrays::last_option($input);
 
-        // PHPStan knows the result is null from the type, but we still verify the behavior
-        $this->assertSame(null, $result);
+        $this->assertNull($result);
     }
 
     public function testLastOptionWithStringKeys(): void
