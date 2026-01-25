@@ -195,4 +195,24 @@ class Arrays
 
         return $result;
     }
+
+    /**
+     * 配列の最後の要素を取得します。空配列の場合は null を返します。
+     *
+     * @template K of array-key
+     * @template V
+     *
+     * @param list<V>|array<K, V> $input 対象の配列
+     * @return V|null 最後の要素、または配列が空の場合は null
+     */
+    public static function last_option(array $input): mixed
+    {
+        if (empty($input)) {
+            return null;
+        }
+
+        $lastKey = array_key_last($input);
+
+        return $input[$lastKey];
+    }
 }
