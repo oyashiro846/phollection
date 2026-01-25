@@ -33,10 +33,21 @@ class Arrays
      */
     public static function filter(array $input, callable $callback, Mode $mode = Mode::MODE_AUTO): array
     {
-        $result = array_filter($input, $callback, ARRAY_FILTER_USE_BOTH);
+        $mode = Mode::check_mode($mode, $input);
 
-        return Mode::check_mode($mode, $input) === Mode::MODE_LIST
-            ? array_values($result) : $result;
+        $result = [];
+
+        foreach ($input as $key => $value) {
+            if ($callback($value, $key)) {
+                if ($mode === Mode::MODE_LIST) {
+                    $result[] = $value;
+                } else {
+                    $result[$key] = $value;
+                }
+            }
+        }
+
+        return $result;
     }
 
     /**
