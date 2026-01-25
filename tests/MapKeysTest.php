@@ -87,7 +87,7 @@ final class MapKeysTest extends TestCase
 
         $result = Arrays::map_keys(
             $input,
-            fn (string $key, string $value): int => strlen($value),
+            fn (string $key, string $value): int => \strlen($value),
         );
 
         // Both values have length 5 and 4
