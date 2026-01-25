@@ -42,6 +42,9 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          claude_args: |
-            --max-turns 10claude_args: |
+          claude_args: >-
+            --model ${{ contains(github.event.comment.body, '[opus]') && 'opus'
+              || contains(github.event.comment.body, '[haiku]') && 'haiku'
+              || 'sonnet' }}
+            --max-turns 25
             --allowedTools "Bash(vendor/bin/php-cs-fixer fix:*)" "Bash(vendor/bin/phpstan analyse:*)" "Bash(vendor/bin/phpunit tests:*)"
