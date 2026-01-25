@@ -252,4 +252,29 @@ class Arrays
 
         return $input[$lastKey];
     }
+
+    /**
+     * 配列のキーを変換します。値は保持されます。
+     *
+     * 注意: 複数のキーが同じ値に変換された場合、後のエントリの値が前のエントリを上書きします。
+     *
+     * @template K of array-key
+     * @template V
+     * @template R of array-key
+     *
+     * @param array<K, V> $input 対象の配列
+     * @param callable(K, V): R $callback キーを変換する関数
+     * @return array<R, V> キーが変換された新しい配列
+     */
+    public static function map_keys(array $input, callable $callback): array
+    {
+        $result = [];
+
+        foreach ($input as $key => $value) {
+            $newKey = $callback($key, $value);
+            $result[$newKey] = $value;
+        }
+
+        return $result;
+    }
 }
