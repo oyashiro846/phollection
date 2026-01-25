@@ -61,7 +61,8 @@ final class LastOptionTest extends TestCase
         $input  = [1, 2, null];
         $result = Arrays::last_option($input);
 
-        $this->assertNull($result);
+        // PHPStan knows the result is null from the type, but we still verify the behavior
+        $this->assertSame(null, $result);
     }
 
     public function testLastOptionWithStringKeys(): void
