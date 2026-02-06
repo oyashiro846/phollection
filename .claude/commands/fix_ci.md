@@ -2,11 +2,7 @@
 目的：CI失敗を最小パッチで直す（安全寄り）。
 
 ## push前の必須手順（自動修正込み）
-push/commit 前に必ず以下を実行し、ツールが修正した差分も含めて提出する。
-
-- `vendor/bin/php-cs-fixer fix`
-- `vendor/bin/phpstan analyse -c phpstan.neon`
-- `vendor/bin/phpunit tests`
+push/commit 前に必ずCIでLinter/Formatter/Testを実行し、ツールが修正した差分も含めて提出する。
 
 ## 入力
 - 失敗ログの要点
