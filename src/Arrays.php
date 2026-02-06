@@ -274,10 +274,23 @@ class Arrays
      */
     public static function intersect(array $input, array $other, Mode $mode = Mode::MODE_AUTO): array
     {
-        $mode   = Mode::check_mode($mode, $input);
-        $result = array_intersect($input, $other);
+        $mode = Mode::check_mode($mode, $input);
 
-        return $mode === Mode::MODE_LIST ? array_values($result) : $result;
+        if ($mode === Mode::MODE_LIST) {
+            // LIST モードでは foreach で直接リストを構築（array_values の O(N) を回避）
+            $result = [];
+
+            foreach ($input as $value) {
+                if (\in_array($value, $other, false)) {
+                    $result[] = $value;
+                }
+            }
+
+            return $result;
+        }
+
+        // ASSOC モードでは array_intersect を使用（キーを保持）
+        return array_intersect($input, $other);
     }
 
     /**
