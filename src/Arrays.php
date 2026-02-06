@@ -274,16 +274,10 @@ class Arrays
      */
     public static function intersect(array $input, array $other, Mode $mode = Mode::MODE_AUTO): array
     {
-        $mode = Mode::check_mode($mode, $input);
+        $mode   = Mode::check_mode($mode, $input);
+        $result = array_intersect($input, $other);
 
-        if ($mode === Mode::MODE_LIST) {
-            // LIST モードでは入力を正規化してから交差を取る
-            // これにより array_intersect の結果が既にリスト形式になる
-            $input = array_values($input);
-            $other = array_values($other);
-        }
-
-        return array_intersect($input, $other);
+        return $mode === Mode::MODE_LIST ? array_values($result) : $result;
     }
 
     /**
