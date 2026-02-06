@@ -276,13 +276,14 @@ class Arrays
     {
         $mode = Mode::check_mode($mode, $input);
 
-        $result = array_intersect($input, $other);
-
         if ($mode === Mode::MODE_LIST) {
-            return \array_values($result);
+            // LIST モードでは入力を正規化してから交差を取る
+            // これにより array_intersect の結果が既にリスト形式になる
+            $input = array_values($input);
+            $other = array_values($other);
         }
 
-        return $result;
+        return array_intersect($input, $other);
     }
 
     /**
