@@ -1,31 +1,62 @@
-name: Claude Code
+name: Claude Implement
+run-name: "claude-impl issue #${{ github.event.issue.number }}"
 
 on:
   issue_comment:
-    types: [ created ]
-  pull_request_review_comment:
-    types: [ created ]
+    types: [created]
 
 permissions:
   contents: write
   pull-requests: write
   issues: write
+  actions: write
   id-token: write
 
 concurrency:
-  group: claude-${{ github.repository }}-${{ github.event.issue.number || github.event.pull_request.number }}
-  cancel-in-progress: false
+  group: >-
+    claude-impl-${{ github.event.issue.number }}
+    -${{ contains(github.event.comment.body, '[review]') && 'review' || 'implement' }}
+    -${{ github.event.comment.user.type == 'Bot' && 'bot' || 'user' }}
+  cancel-in-progress: true
 
 jobs:
-  claude:
-    timeout-minutes: 30
+  impl:
+    if: |
+      github.event.comment.user.type != 'Bot' &&
+      contains(github.event.comment.body, '@claude') &&
+      !contains(github.event.comment.body, '[review]')
     runs-on: ubuntu-latest
-    if: contains(github.event.comment.body, '@claude')
-
     steps:
-      - name: Checkout repository
+      # ローカル action を読むために checkout は必要
+      # ここではデフォルトブランチを取る（issue起点 implement は Claude 側がブランチ作成する想定）
+      - name: Checkout repository to access local actions
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
+
+      - name: Prepare context
+        id: prep
+        uses: Javakky/claude-starter/.github/actions/prepare-claude-context@master
+        with:
+          mode: "implement"
+          impl_workflow_id: claude.yml # ←この workflow ファイル名に合わせる（ファイル名変えるならここも変える）
+
+      # PR上の@claude(implement)であれば、そのPRの review を止めたい（任意）
+      - name: Cancel running reviews for this PR
+        if: steps.prep.outputs.should_run == 'true' && steps.prep.outputs.pr_number != ''
+        uses: Javakky/claude-starter/.github/actions/cancel-claude-runs@master
+        with:
+          workflow_id: claude-review.yml
+          pr_number: ${{ steps.prep.outputs.pr_number }}
+          head_ref: ${{ steps.prep.outputs.head_ref }}
+          head_sha: ${{ steps.prep.outputs.head_sha }}
+
+      # PR conversation から呼ばれた場合だけ、そのブランチへ checkout し直す
+      - name: Checkout PR head branch (PR conversation only)
+        if: steps.prep.outputs.should_run == 'true' && steps.prep.outputs.pr_number != ''
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.prep.outputs.head_ref }}
           fetch-depth: 0
 
       - name: Setup PHP
@@ -38,13 +69,17 @@ jobs:
       - name: Install dependencies
         run: composer install --no-progress --prefer-dist --no-interaction
 
-      - name: Run Claude Code Action
-        uses: anthropics/claude-code-action@v1
+      - name: Run Claude (implement)
+        if: steps.prep.outputs.should_run == 'true'
+        uses: Javakky/claude-starter/.github/actions/run-claude@master
         with:
+          # Issue起点でもPR起点でも、@claude を含む本文がそのままClaudeに渡る
+          comment_body: ${{ steps.prep.outputs.comment_body }}
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          claude_args: >-
-            --model ${{ contains(github.event.comment.body, '[opus]') && 'opus'
-              || contains(github.event.comment.body, '[haiku]') && 'haiku'
-              || 'sonnet' }}
-            --max-turns 25
-            --allowedTools "Bash(vendor/bin/php-cs-fixer fix:*)" "Bash(vendor/bin/phpstan analyse:*)" "Bash(vendor/bin/phpunit tests:*)"
+          # 必要に応じてデフォルト値をオーバーライド
+          # default_model: 'opus'
+          # default_max_turns: 20
+          allowed_tools: |
+            Bash(vendor/bin/php-cs-fixer fix)
+            Bash(vendor/bin/phpstan analyse -c phpstan.neon)
+            Bash(vendor/bin/phpunit tests)
