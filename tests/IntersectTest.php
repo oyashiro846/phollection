@@ -36,8 +36,8 @@ final class IntersectTest extends TestCase
             'carol' => 23,
         ];
         $other = [
-            'dave'  => 20,
-            'eve'   => 23,
+            'dave' => 20,
+            'eve'  => 23,
         ];
 
         $result = Arrays::intersect($input, $other);
