@@ -151,13 +151,16 @@ class Arrays
         return \array_slice($input, $offset, $length, $mode === Mode::MODE_ASSOC);
     }
 
-        /**
+    /**
      * 配列から重複した値を削除する
      *
      * @template K of array-key
      * @template V
      *
      * @param list<V>|array<K, V> $input 対象の配列
+     * @param bool $strict trueのとき厳密な型比較を行う
+     * @param int $flags $strict=falseのときの比較形式(array_uniqueのデフォルト値はSORT_STRINGだがuniqueではSORT_REGULARをデフォルト値とする)
+     * @param Mode $mode 戻り値のコレクションの型
      * @phpstan-return ($mode is Mode::MODE_LIST ? list<V> :
      *     ($mode is Mode::MODE_ASSOC ? array<K, V> :
      *       ($input is list<V> ? list<V> :
@@ -167,7 +170,7 @@ class Arrays
     public static function unique(
         array $input,
         bool $strict = false,
-        int $flags = SORT_STRING,
+        int $flags = SORT_REGULAR,
         Mode $mode = Mode::MODE_AUTO,
     ): array {
         if (!$strict) {
@@ -194,16 +197,7 @@ class Arrays
                         $result[$key] = $value;
                     }
                 } else {
-                    $is_unique = true;
-
-                    foreach ($result as $existing_value) {
-                        if ($value === $existing_value) {
-                            $is_unique = false;
-                            break;
-                        }
-                    }
-
-                    if ($is_unique) {
+                    if (!in_array($value, $result, true)) {
                         $result[$key] = $value;
                     }
                 }
