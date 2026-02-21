@@ -52,7 +52,7 @@ final class UniqueTest extends TestCase
 
     public function testUniqueStringListWithStrictWithListMode(): void
     {
-        $result = Arrays::unique(['3', '1', '4', '1', '5', '9', '2'], strict: true, flags: SORT_STRING, mode: Mode::MODE_LIST);
+        $result = Arrays::unique(['3', '1', '4', '1', '5', '9', '2'], strict: true, mode: Mode::MODE_LIST);
 
         $this->assertSame(['3', '1', '4', '5', '9', '2'], $result);
     }
