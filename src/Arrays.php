@@ -161,6 +161,9 @@ class Arrays
      * @param bool $strict true のときは型も区別する厳密な比較を行う（===相当）。false のときは array_unique に $flags を渡す
      * @param int $flags $strict=false のときの比較方法。デフォルトは SORT_REGULAR（array_unique の デフォルトは SORT_STRING とは異なる）。$strict=true の場合は $flags は無視される。
      * @param Mode $mode MODE_LIST のときは list として扱いインデックスを詰める。MODE_ASSOC のときはキーを保持。MODE_AUTO のときは入力に応じて判定
+     *
+     * 注意: array_uniqueのラッパーとして $flags を残していますが、$strict=true と $flags を同時に指定することは推奨されません。この場合、$flags は無視されます。
+     *
      * @phpstan-return ($mode is Mode::MODE_LIST ? list<V> :
      *     ($mode is Mode::MODE_ASSOC ? array<K, V> :
      *       ($input is list<V> ? list<V> :
