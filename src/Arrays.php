@@ -384,7 +384,9 @@ class Arrays
 
     private static function get_strict_hash(mixed $input): string
     {
-        if (\is_scalar($input) || $input === null) {
+        if ($input === null) {
+            $hash = 'null:null';
+        } elseif (\is_scalar($input)) {
             $type = get_debug_type($input);
             $hash = $type . ':' . (string)$input;
         } elseif (\is_resource($input)) {

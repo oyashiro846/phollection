@@ -86,7 +86,7 @@ final class UniqueTest extends TestCase
 
     public function testNestedListWithStrictWithAutoMode(): void
     {
-        $result = Arrays::unique([1, [1.25, 1.5, ['1.75']], [1.25, 1.5, ['1.75']], 2, ['value'=>2.5], ['value'=>2.5], 3]);
+        $result = Arrays::unique([1, [1.25, 1.5, ['1.75']], [1.25, 1.5, ['1.75']], 2, ['value' => 2.5], ['value' => 2.5], 3]);
 
         $this->assertSame([1, [1.25, 1.5, ['1.75']], 2, ['value' => 2.5], 3], $result);
     }
@@ -94,7 +94,7 @@ final class UniqueTest extends TestCase
     public function testListWithResourceWithStrictWithAutoMode(): void
     {
         $resource = fopen('php://memory', 'r+');
-        fwrite($resource, "Hello, world!");
+        fwrite($resource, 'Hello, world!');
 
         $result = Arrays::unique([$resource, $resource], true);
 
