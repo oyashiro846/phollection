@@ -94,6 +94,11 @@ final class UniqueTest extends TestCase
     public function testListWithResourceWithStrictWithAutoMode(): void
     {
         $resource = fopen('php://memory', 'r+');
+
+        if ($resource === false) {
+            throw new \RuntimeException('Failed to open resource');
+        }
+
         fwrite($resource, 'Hello, world!');
 
         $result = Arrays::unique([$resource, $resource], true);
