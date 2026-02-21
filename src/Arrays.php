@@ -173,39 +173,34 @@ class Arrays
         int $flags = SORT_REGULAR,
         Mode $mode = Mode::MODE_AUTO,
     ): array {
+        $mode = Mode::check_mode($mode, $input);
+
         if (!$strict) {
             $result = array_unique($input, $flags);
+
+            if ($mode === Mode::MODE_LIST) {
+                $result = array_values($result);
+            }
         } else {
             $seen   = [];
             $result = [];
 
             foreach ($input as $key => $value) {
-                if (\is_scalar($value)) {
-                    $type = get_debug_type($value);
-                    $hash = $type . ':' . (string)$value;
-                } elseif (\is_object($value)) {
-                    $hash = 'object:' . spl_object_hash($value);
-                } elseif (\is_array($value)) {
-                    $hash = 'array:' . serialize($value);
-                } else {
-                    $hash = null;
-                }
+                $hash = self::get_strict_hash($value);
 
-                if ($hash !== null) {
-                    if (!isset($seen[$hash])) {
-                        $seen[$hash]  = true;
-                        $result[$key] = $value;
-                    }
-                } else {
-                    if (!in_array($value, $result, true)) {
+                if (!isset($seen[$hash])) {
+                    $seen[$hash] = true;
+
+                    if ($mode === Mode::MODE_LIST) {
+                        $result[] = $value;
+                    } else {
                         $result[$key] = $value;
                     }
                 }
             }
         }
 
-        return Mode::check_mode($mode, $input) === Mode::MODE_LIST
-                ? array_values($result) : $result;
+        return $result;
     }
 
     /**
@@ -385,5 +380,26 @@ class Arrays
         }
 
         return $result;
+    }
+
+    private static function get_strict_hash(mixed $input): string
+    {
+        if (\is_scalar($input) || $input === null) {
+            $type = get_debug_type($input);
+            $hash = $type . ':' . (string)$input;
+        } elseif (\is_resource($input)) {
+            $hash = 'r:' . (int)$input;
+        } elseif (\is_object($input)) {
+            $hash = 'o:' . spl_object_hash($input);
+        } elseif (\is_array($input)) {
+            $parts = [];
+
+            foreach ($input as $k => $v) {
+                $parts[] = $k . '=>' . self::get_strict_hash($v);
+            }
+            $hash = 'a:[' . implode(';', $parts) . ']';
+        }
+
+        return $hash;
     }
 }
