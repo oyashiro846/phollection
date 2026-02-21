@@ -384,6 +384,8 @@ class Arrays
 
     private static function get_strict_hash(mixed $input): string
     {
+        $hash = '';
+
         if ($input === null) {
             $hash = 'null:null';
         } elseif (\is_scalar($input)) {
@@ -400,8 +402,6 @@ class Arrays
                 $parts[] = $k . '=>' . self::get_strict_hash($v);
             }
             $hash = 'a:[' . implode(';', $parts) . ']';
-        } else {
-            $hash = '';
         }
 
         return $hash;
