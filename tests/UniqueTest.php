@@ -69,4 +69,37 @@ final class UniqueTest extends TestCase
 
         $this->assertSame([$obj1, $obj2], $result);
     }
+
+    public function testEmptyListWithStrictWithAutoMode(): void
+    {
+        $result = Arrays::unique([], true);
+
+        $this->assertSame([], $result);
+    }
+
+    public function testSameValueListWithStrictWithAutoMode(): void
+    {
+        $result = Arrays::unique([1, 1, 1, 1, 1, 1], true);
+
+        $this->assertSame([1], $result);
+    }
+
+    public function testNestedListWithStrictWithAutoMode(): void
+    {
+        $result = Arrays::unique([1, [1.25, 1.5, ['1.75']], [1.25, 1.5, ['1.75']], 2, ['value'=>2.5], ['value'=>2.5], 3]);
+
+        $this->assertSame([1, [1.25, 1.5, ['1.75']], 2, ['value' => 2.5], 3], $result);
+    }
+
+    public function testListWithResourceWithStrictWithAutoMode(): void
+    {
+        $resource = fopen('php://memory', 'r+');
+        fwrite($resource, "Hello, world!");
+
+        $result = Arrays::unique([$resource, $resource], true);
+
+        $this->assertSame([$resource], $result);
+
+        fclose($resource);
+    }
 }
