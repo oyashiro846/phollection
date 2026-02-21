@@ -400,6 +400,8 @@ class Arrays
                 $parts[] = $k . '=>' . self::get_strict_hash($v);
             }
             $hash = 'a:[' . implode(';', $parts) . ']';
+        } else {
+            $hash = '';
         }
 
         return $hash;
