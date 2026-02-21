@@ -107,4 +107,10 @@ final class UniqueTest extends TestCase
 
         fclose($resource);
     }
+
+    public function testSingleValueListWithStrictWithAutoMode(): void
+    {
+        $result = Arrays::unique([1], strict: true);
+        $this->assertSame([1], $result);
+    }
 }
