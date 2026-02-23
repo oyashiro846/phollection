@@ -86,6 +86,7 @@ fabric.properties
 .idea/php_collection.iml
 .idea/vcs.xml
 .idea/php.xml
+.idea/google-java-format.xml
 
 ### Composer template
 composer.phar
