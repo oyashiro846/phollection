@@ -87,6 +87,30 @@ class Arrays
     }
 
     /**
+     * 配列の最後の要素を除いたすべての要素を返します。
+     *
+     * @template K of array-key
+     * @template V
+     *
+     * @param list<V>|array<K, V> $input 対象の配列
+     * @return list<V>|array<K, V>
+     * @phpstan-return ($mode is Mode::MODE_LIST ? list<V> :
+     *     ($mode is Mode::MODE_ASSOC ? array<K, V> :
+     *       ($input is list<V> ? list<V> :
+     *         array<K, V>
+     *  )))
+     */
+    public static function init(array $input, Mode $mode = Mode::MODE_AUTO): array
+    {
+        return \array_slice(
+            $input,
+            0,
+            -1,
+            Mode::check_mode($mode, $input) === Mode::MODE_ASSOC,
+        );
+    }
+
+    /**
      * 配列を変換しつつ、null になった要素を取り除きます。
      *
      * @template K of array-key
