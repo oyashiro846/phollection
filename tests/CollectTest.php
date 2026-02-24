@@ -12,7 +12,7 @@ final class CollectTest extends TestCase
     {
         $input = [1, 2, 3, 4];
 
-        $result = Arrays::collect(
+        $result = collect(
             $input,
             fn (int $v): ?int => $v % 2 === 0 ? $v * 10 : null,
         );
@@ -24,7 +24,7 @@ final class CollectTest extends TestCase
     {
         $input = [10, 20, 30];
 
-        $result = Arrays::collect(
+        $result = collect(
             $input,
             fn (int $v, int $i): ?int => $i === 1 ? $v + 1 : null,
             Mode::MODE_LIST,
@@ -41,7 +41,7 @@ final class CollectTest extends TestCase
             'carol' => 23,
         ];
 
-        $result = Arrays::collect(
+        $result = collect(
             $input,
             function (int $age, string $name): ?array {
                 if ($age < 20) {

@@ -12,7 +12,7 @@ final class ReduceTest extends TestCase
     {
         $input = [1, 2, 3, 4];
 
-        $sum = Arrays::reduce(
+        $sum = reduce(
             $input,
             function (?int $carry, int $item): int {
                 return ($carry ?? 0) + $item;
@@ -26,7 +26,7 @@ final class ReduceTest extends TestCase
     {
         $input = [1, 2, 3];
 
-        $sum = Arrays::reduce(
+        $sum = reduce(
             $input,
             function (int $carry, int $item): int {
                 return $carry + $item;
@@ -41,7 +41,7 @@ final class ReduceTest extends TestCase
     {
         $input = [];
 
-        $result = Arrays::reduce(
+        $result = reduce(
             $input,
             function ($carry, $item) {
                 return $carry + $item;
@@ -56,7 +56,7 @@ final class ReduceTest extends TestCase
     {
         $input = [];
 
-        $result = Arrays::reduce(
+        $result = reduce(
             $input,
             function ($carry, $item) {
                 return $carry + $item;
@@ -70,7 +70,7 @@ final class ReduceTest extends TestCase
     {
         $input = ['a' => 1, 'b' => 2, 'c' => 3];
 
-        $result = Arrays::reduce(
+        $result = reduce(
             $input,
             function (int $carry, int $item): int {
                 return $carry + $item;

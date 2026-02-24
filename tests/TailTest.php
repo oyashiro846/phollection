@@ -11,7 +11,7 @@ final class TailTest extends TestCase
     public function testTailListWithAutoMode(): void
     {
         $input  = [1, 2, 3];
-        $result = Arrays::tail($input);
+        $result = tail($input);
 
         $this->assertSame([2, 3], $result);
     }
@@ -19,7 +19,7 @@ final class TailTest extends TestCase
     public function testTailAssocWithAutoMode(): void
     {
         $input  = ['a' => 1, 'b' => 2, 'c' => 3];
-        $result = Arrays::tail($input);
+        $result = tail($input);
 
         $this->assertSame(['b' => 2, 'c' => 3], $result);
     }
@@ -27,7 +27,7 @@ final class TailTest extends TestCase
     public function testTailListWithListMode(): void
     {
         $input  = [1, 2, 3];
-        $result = Arrays::tail($input, Mode::MODE_LIST);
+        $result = tail($input, Mode::MODE_LIST);
 
         $this->assertSame([2, 3], $result);
     }
@@ -35,7 +35,7 @@ final class TailTest extends TestCase
     public function testTailAssocWithAssocMode(): void
     {
         $input  = ['a' => 1, 'b' => 2, 'c' => 3];
-        $result = Arrays::tail($input, Mode::MODE_ASSOC);
+        $result = tail($input, Mode::MODE_ASSOC);
 
         $this->assertSame(['b' => 2, 'c' => 3], $result);
     }
@@ -43,7 +43,7 @@ final class TailTest extends TestCase
     public function testTailSingleElementList(): void
     {
         $input  = [42];
-        $result = Arrays::tail($input);
+        $result = tail($input);
 
         $this->assertSame([], $result);
     }
@@ -51,7 +51,7 @@ final class TailTest extends TestCase
     public function testTailSingleElementAssoc(): void
     {
         $input  = ['a' => 42];
-        $result = Arrays::tail($input);
+        $result = tail($input);
 
         $this->assertSame([], $result);
     }
@@ -59,7 +59,7 @@ final class TailTest extends TestCase
     public function testTailNumericAssocWithAssocMode(): void
     {
         $input  = [10 => 1, 20 => 2, 30 => 3];
-        $result = Arrays::tail($input, Mode::MODE_ASSOC);
+        $result = tail($input, Mode::MODE_ASSOC);
 
         $this->assertSame([20 => 2, 30 => 3], $result);
     }

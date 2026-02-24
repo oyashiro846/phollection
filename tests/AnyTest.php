@@ -10,20 +10,20 @@ final class AnyTest extends TestCase
 {
     public function testAnyReturnsTrueWhenSomeElementMatches(): void
     {
-        $this->assertTrue(Arrays::any([1, 2, 3, 4], fn (int $v): bool => $v % 2 === 0));
+        $this->assertTrue(any([1, 2, 3, 4], fn (int $v): bool => $v % 2 === 0));
     }
 
     public function testAnyReturnsFalseWhenNoElementMatches(): void
     {
         // @phpstan-ignore  identical.alwaysFalse
-        $this->assertFalse(Arrays::any([1, 3, 5], fn (int $v): bool => $v % 2 === 0));
+        $this->assertFalse(any([1, 3, 5], fn (int $v): bool => $v % 2 === 0));
     }
 
     public function testAnyWorksWithAssocArrayAndUsesKey(): void
     {
         $input = ['a' => 1, 'b' => 2, 'c' => 3];
 
-        $result = Arrays::any($input, function (int $v, string $k): bool {
+        $result = any($input, function (int $v, string $k): bool {
             return $k === 'b' && $v === 2;
         });
 
@@ -35,7 +35,7 @@ final class AnyTest extends TestCase
         $input     = [1, 2, 3, 4];
         $callCount = 0;
 
-        $result = Arrays::any($input, function (int $v, int $k) use (&$callCount): bool {
+        $result = any($input, function (int $v, int $k) use (&$callCount): bool {
             $callCount++;
 
             return $v === 3;
@@ -50,7 +50,7 @@ final class AnyTest extends TestCase
         $input     = [];
         $callCount = 0;
 
-        $result = Arrays::any($input, function () use (&$callCount): bool {
+        $result = any($input, function () use (&$callCount): bool {
             $callCount++;
 
             return true;

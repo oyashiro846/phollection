@@ -12,7 +12,7 @@ final class MapKeysTest extends TestCase
     {
         $input = ['a' => 1, 'b' => 2, 'c' => 3];
 
-        $result = Arrays::map_keys(
+        $result = map_keys(
             $input,
             fn (string $key, int $value): string => strtoupper($key),
         );
@@ -27,7 +27,7 @@ final class MapKeysTest extends TestCase
     {
         $input = [1 => 'one', 2 => 'two', 3 => 'three'];
 
-        $result = Arrays::map_keys(
+        $result = map_keys(
             $input,
             fn (int $key, string $value): int => $key * 10,
         );
@@ -42,7 +42,7 @@ final class MapKeysTest extends TestCase
     {
         $input = ['beer' => 2.7, 'bisquit' => 5.8];
 
-        $result = Arrays::map_keys(
+        $result = map_keys(
             $input,
             fn (string $key, float $value): string => substr($key, 0, 1),
         );
@@ -58,7 +58,7 @@ final class MapKeysTest extends TestCase
     {
         $input = ['x' => 100, 'y' => 200];
 
-        $result = Arrays::map_keys(
+        $result = map_keys(
             $input,
             fn (string $key, int $value): string => $key . '_new',
         );
@@ -73,7 +73,7 @@ final class MapKeysTest extends TestCase
     {
         $input = [];
 
-        $result = Arrays::map_keys(
+        $result = map_keys(
             $input,
             fn ($key, $value) => $key,
         );
@@ -85,7 +85,7 @@ final class MapKeysTest extends TestCase
     {
         $input = ['a' => 'alpha', 'b' => 'beta'];
 
-        $result = Arrays::map_keys(
+        $result = map_keys(
             $input,
             fn (string $key, string $value): int => \strlen($value),
         );

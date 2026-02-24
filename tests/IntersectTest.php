@@ -13,7 +13,7 @@ final class IntersectTest extends TestCase
         $input = [1, 2, 3, 4];
         $other = [2, 4, 5, 6];
 
-        $result = Arrays::intersect($input, $other);
+        $result = intersect($input, $other);
 
         $this->assertSame([2, 4], $result);
     }
@@ -23,7 +23,7 @@ final class IntersectTest extends TestCase
         $input = [1, 2, 3, 4];
         $other = [3, 4, 5];
 
-        $result = Arrays::intersect($input, $other, Mode::MODE_LIST);
+        $result = intersect($input, $other, Mode::MODE_LIST);
 
         $this->assertSame([3, 4], $result);
     }
@@ -40,7 +40,7 @@ final class IntersectTest extends TestCase
             'eve'  => 23,
         ];
 
-        $result = Arrays::intersect($input, $other);
+        $result = intersect($input, $other);
 
         $this->assertSame(['alice' => 20, 'carol' => 23], $result);
     }
@@ -57,7 +57,7 @@ final class IntersectTest extends TestCase
             'y' => 3,
         ];
 
-        $result = Arrays::intersect($input, $other, Mode::MODE_ASSOC);
+        $result = intersect($input, $other, Mode::MODE_ASSOC);
 
         $this->assertSame(['b' => 2, 'c' => 3], $result);
     }
@@ -68,7 +68,7 @@ final class IntersectTest extends TestCase
         $input = [];
         $other = [1, 2, 3];
 
-        $result = Arrays::intersect($input, $other);
+        $result = intersect($input, $other);
 
         $this->assertSame([], $result);
     }
@@ -79,7 +79,7 @@ final class IntersectTest extends TestCase
         /** @var list<int> $other */
         $other = [];
 
-        $result = Arrays::intersect($input, $other);
+        $result = intersect($input, $other);
 
         $this->assertSame([], $result);
     }
@@ -89,7 +89,7 @@ final class IntersectTest extends TestCase
         $input = [1, 2, 3];
         $other = [4, 5, 6];
 
-        $result = Arrays::intersect($input, $other);
+        $result = intersect($input, $other);
 
         $this->assertSame([], $result);
     }
@@ -99,7 +99,7 @@ final class IntersectTest extends TestCase
         $input = [1, 2, 3];
         $other = [1, 2, 3];
 
-        $result = Arrays::intersect($input, $other);
+        $result = intersect($input, $other);
 
         $this->assertSame([1, 2, 3], $result);
     }
@@ -109,7 +109,7 @@ final class IntersectTest extends TestCase
         $input = [10, 20, 30, 40];
         $other = [20, 40];
 
-        $result = Arrays::intersect($input, $other, Mode::MODE_LIST);
+        $result = intersect($input, $other, Mode::MODE_LIST);
 
         // array_intersect は元のキー（1, 3）を保持するが、LIST モードでは 0, 1 にリインデックスされる
         $this->assertSame([20, 40], $result);
@@ -121,7 +121,7 @@ final class IntersectTest extends TestCase
         $input = ['apple', 'banana', 'cherry'];
         $other = ['banana', 'cherry', 'date'];
 
-        $result = Arrays::intersect($input, $other);
+        $result = intersect($input, $other);
 
         $this->assertSame(['banana', 'cherry'], $result);
     }

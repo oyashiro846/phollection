@@ -10,14 +10,14 @@ final class SliceTest extends TestCase
 {
     public function testSliceListWithAutoMode(): void
     {
-        $result = Arrays::slice([10, 20, 30, 40], 1, 2);
+        $result = slice([10, 20, 30, 40], 1, 2);
 
         $this->assertSame([20, 30], $result);
     }
 
     public function testSliceListWithListMode(): void
     {
-        $result = Arrays::slice([1, 2, 3, 4], 2, null, Mode::MODE_LIST);
+        $result = slice([1, 2, 3, 4], 2, null, Mode::MODE_LIST);
         $this->assertSame([3, 4], $result);
     }
 
@@ -29,7 +29,7 @@ final class SliceTest extends TestCase
             'c' => 3,
             'd' => 4,
         ];
-        $result = Arrays::slice($input, 1, 2);
+        $result = slice($input, 1, 2);
         $this->assertSame([
             'b' => 2,
             'c' => 3,
@@ -43,7 +43,7 @@ final class SliceTest extends TestCase
             'y' => 20,
             'z' => 30,
         ];
-        $result = Arrays::slice($input, 1, null, Mode::MODE_ASSOC);
+        $result = slice($input, 1, null, Mode::MODE_ASSOC);
         $this->assertSame([
             'y' => 20,
             'z' => 30,
@@ -52,19 +52,19 @@ final class SliceTest extends TestCase
 
     public function testSliceWithNegativeOffset(): void
     {
-        $result = Arrays::slice([1, 2, 3, 4], -2);
+        $result = slice([1, 2, 3, 4], -2);
         $this->assertSame([3, 4], $result);
     }
 
     public function testSliceWithTooLongLength(): void
     {
-        $result = Arrays::slice([1, 2, 3, 4], 2, 10);
+        $result = slice([1, 2, 3, 4], 2, 10);
         $this->assertSame([3, 4], $result);
     }
 
     public function testSliceOnEmptyArray(): void
     {
-        $result = Arrays::slice([], 0, 10);
+        $result = slice([], 0, 10);
         $this->assertSame([], $result);
     }
 }
