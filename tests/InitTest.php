@@ -64,6 +64,15 @@ final class InitTest extends TestCase
         $this->assertSame([10 => 1, 20 => 2], $result);
     }
 
+    public function testInitNonSequentialNumericKeysWithAutoMode(): void
+    {
+        $input  = [2 => 'a', 0 => 'b', 1 => 'c'];
+        $result = Arrays::init($input);
+
+        // キーが 0 始まりの連番でないため ASSOC 扱いとなり、キーが保持される
+        $this->assertSame([2 => 'a', 0 => 'b'], $result);
+    }
+
     public function testInitEmptyList(): void
     {
         $input  = [];

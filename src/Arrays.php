@@ -65,10 +65,16 @@ class Arrays
     }
 
     /**
+     * 配列の最初の要素を除いたすべての要素を返します。
+     *
      * @template K of array-key
      * @template V
      *
      * @param list<V>|array<K, V> $input 対象の配列
+     * @phpstan-param ($mode is Mode::MODE_LIST ? list<V> :
+     *   ($mode is Mode::MODE_ASSOC ? array<K, V> :
+     *     list<V>|array<K, V>
+     * )) $input
      * @return list<V>|array<K, V>
      * @phpstan-return ($mode is Mode::MODE_LIST ? list<V> :
      *     ($mode is Mode::MODE_ASSOC ? array<K, V> :
@@ -93,6 +99,10 @@ class Arrays
      * @template V
      *
      * @param list<V>|array<K, V> $input 対象の配列
+     * @phpstan-param ($mode is Mode::MODE_LIST ? list<V> :
+     *   ($mode is Mode::MODE_ASSOC ? array<K, V> :
+     *     list<V>|array<K, V>
+     * )) $input
      * @return list<V>|array<K, V>
      * @phpstan-return ($mode is Mode::MODE_LIST ? list<V> :
      *     ($mode is Mode::MODE_ASSOC ? array<K, V> :
