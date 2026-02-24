@@ -12,7 +12,7 @@ final class MapTest extends TestCase
     {
         $input = [1, 2, 3];
 
-        $result = Arrays::map(
+        $result = map(
             $input,
             fn (int $value, int $key): int => $value * 10 + $key,
             Mode::MODE_LIST,
@@ -25,7 +25,7 @@ final class MapTest extends TestCase
     {
         $input = ['a' => 1, 'b' => 2];
 
-        $result = Arrays::map(
+        $result = map(
             $input,
             fn (int $value, string $key): string => $key . ':' . $value,
             Mode::MODE_LIST,
@@ -38,7 +38,7 @@ final class MapTest extends TestCase
     {
         $input = ['x' => 1, 'y' => 2];
 
-        $result = Arrays::map(
+        $result = map(
             $input,
             fn (int $value, string $key): string => $key . ':' . ($value * 2),
             Mode::MODE_ASSOC,
@@ -54,7 +54,7 @@ final class MapTest extends TestCase
     {
         $input = [1, 2];
 
-        $result = Arrays::map(
+        $result = map(
             $input,
             fn (int $v, int $k): int => $v * 2,
         );
@@ -66,7 +66,7 @@ final class MapTest extends TestCase
     {
         $input = ['a' => 1, 'b' => 2];
 
-        $result = Arrays::map(
+        $result = map(
             $input,
             fn (int $v, string $k): string => $k . $v,
         );
@@ -83,15 +83,15 @@ final class MapTest extends TestCase
 
         $this->assertSame(
             [],
-            Arrays::map($input, fn ($v, $k) => $v, Mode::MODE_LIST),
+            map($input, fn ($v, $k) => $v, Mode::MODE_LIST),
         );
         $this->assertSame(
             [],
-            Arrays::map($input, fn ($v, $k) => $v, Mode::MODE_ASSOC),
+            map($input, fn ($v, $k) => $v, Mode::MODE_ASSOC),
         );
         $this->assertSame(
             [],
-            Arrays::map($input, fn ($v, $k) => $v),
+            map($input, fn ($v, $k) => $v),
         );
     }
 }

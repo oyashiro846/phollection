@@ -11,7 +11,7 @@ final class HeadOptionTest extends TestCase
     public function testHeadOptionWithList(): void
     {
         $input  = [1, 2, 3];
-        $result = Arrays::head_option($input);
+        $result = head_option($input);
 
         $this->assertSame(1, $result);
     }
@@ -19,7 +19,7 @@ final class HeadOptionTest extends TestCase
     public function testHeadOptionWithAssoc(): void
     {
         $input  = ['a' => 1, 'b' => 2, 'c' => 3];
-        $result = Arrays::head_option($input);
+        $result = head_option($input);
 
         $this->assertSame(1, $result);
     }
@@ -27,7 +27,7 @@ final class HeadOptionTest extends TestCase
     public function testHeadOptionWithNumericAssoc(): void
     {
         $input  = [10 => 'a', 20 => 'b', 30 => 'c'];
-        $result = Arrays::head_option($input);
+        $result = head_option($input);
 
         $this->assertSame('a', $result);
     }
@@ -35,7 +35,7 @@ final class HeadOptionTest extends TestCase
     public function testHeadOptionWithSingleElement(): void
     {
         $input  = [42];
-        $result = Arrays::head_option($input);
+        $result = head_option($input);
 
         $this->assertSame(42, $result);
     }
@@ -43,7 +43,7 @@ final class HeadOptionTest extends TestCase
     public function testHeadOptionWithSingleElementAssoc(): void
     {
         $input  = ['key' => 'value'];
-        $result = Arrays::head_option($input);
+        $result = head_option($input);
 
         $this->assertSame('value', $result);
     }
@@ -51,7 +51,7 @@ final class HeadOptionTest extends TestCase
     public function testHeadOptionWithEmptyArray(): void
     {
         $input  = [];
-        $result = Arrays::head_option($input);
+        $result = head_option($input);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -60,7 +60,7 @@ final class HeadOptionTest extends TestCase
     public function testHeadOptionWithNullValue(): void
     {
         $input  = [null, 1, 2];
-        $result = Arrays::head_option($input);
+        $result = head_option($input);
 
         $this->assertNull($result);
     }
@@ -68,7 +68,7 @@ final class HeadOptionTest extends TestCase
     public function testHeadOptionWithStringKeys(): void
     {
         $input  = ['first' => 'a', 'second' => 'b', 'third' => 'c'];
-        $result = Arrays::head_option($input);
+        $result = head_option($input);
 
         $this->assertSame('a', $result);
     }

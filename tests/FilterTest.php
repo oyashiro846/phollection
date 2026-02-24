@@ -12,7 +12,7 @@ final class FilterTest extends TestCase
     {
         $input = [1, 2, 3, 4];
 
-        $result = Arrays::filter(
+        $result = filter(
             $input,
             fn (int $v): bool => $v % 2 === 0,
         );
@@ -24,7 +24,7 @@ final class FilterTest extends TestCase
     {
         $input = [1, 2, 3, 4];
 
-        $result = Arrays::filter(
+        $result = filter(
             $input,
             fn (int $v): bool => $v > 2,
             Mode::MODE_LIST,
@@ -41,7 +41,7 @@ final class FilterTest extends TestCase
             'carol' => 23,
         ];
 
-        $result = Arrays::filter(
+        $result = filter(
             $input,
             fn (int $age, string $name): bool => $age >= 20,
         );
@@ -56,7 +56,7 @@ final class FilterTest extends TestCase
             'bob'   => 17,
         ];
 
-        $result = Arrays::filter(
+        $result = filter(
             $input,
             fn (int $age): bool => $age >= 18,
             Mode::MODE_ASSOC,
@@ -69,7 +69,7 @@ final class FilterTest extends TestCase
     {
         $input = [10, 20, 30];
 
-        $result = Arrays::filter(
+        $result = filter(
             $input,
             fn (int $value, int $index): bool => $index % 2 === 0,
             Mode::MODE_LIST,

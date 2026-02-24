@@ -11,7 +11,7 @@ final class InitTest extends TestCase
     public function testInitListWithAutoMode(): void
     {
         $input  = [1, 2, 3];
-        $result = Arrays::init($input);
+        $result = init($input);
 
         $this->assertSame([1, 2], $result);
     }
@@ -19,7 +19,7 @@ final class InitTest extends TestCase
     public function testInitAssocWithAutoMode(): void
     {
         $input  = ['a' => 1, 'b' => 2, 'c' => 3];
-        $result = Arrays::init($input);
+        $result = init($input);
 
         $this->assertSame(['a' => 1, 'b' => 2], $result);
     }
@@ -27,7 +27,7 @@ final class InitTest extends TestCase
     public function testInitListWithListMode(): void
     {
         $input  = [1, 2, 3];
-        $result = Arrays::init($input, Mode::MODE_LIST);
+        $result = init($input, Mode::MODE_LIST);
 
         $this->assertSame([1, 2], $result);
     }
@@ -35,7 +35,7 @@ final class InitTest extends TestCase
     public function testInitAssocWithAssocMode(): void
     {
         $input  = ['a' => 1, 'b' => 2, 'c' => 3];
-        $result = Arrays::init($input, Mode::MODE_ASSOC);
+        $result = init($input, Mode::MODE_ASSOC);
 
         $this->assertSame(['a' => 1, 'b' => 2], $result);
     }
@@ -43,7 +43,7 @@ final class InitTest extends TestCase
     public function testInitSingleElementList(): void
     {
         $input  = [42];
-        $result = Arrays::init($input);
+        $result = init($input);
 
         $this->assertSame([], $result);
     }
@@ -51,7 +51,7 @@ final class InitTest extends TestCase
     public function testInitSingleElementAssoc(): void
     {
         $input  = ['a' => 42];
-        $result = Arrays::init($input);
+        $result = init($input);
 
         $this->assertSame([], $result);
     }
@@ -59,7 +59,7 @@ final class InitTest extends TestCase
     public function testInitNumericAssocWithAssocMode(): void
     {
         $input  = [10 => 1, 20 => 2, 30 => 3];
-        $result = Arrays::init($input, Mode::MODE_ASSOC);
+        $result = init($input, Mode::MODE_ASSOC);
 
         $this->assertSame([10 => 1, 20 => 2], $result);
     }
@@ -67,7 +67,7 @@ final class InitTest extends TestCase
     public function testInitNonSequentialNumericKeysWithAutoMode(): void
     {
         $input  = [2 => 'a', 0 => 'b', 1 => 'c'];
-        $result = Arrays::init($input);
+        $result = init($input);
 
         // キーが 0 始まりの連番でないため ASSOC 扱いとなり、キーが保持される
         $this->assertSame([2 => 'a', 0 => 'b'], $result);
@@ -76,7 +76,7 @@ final class InitTest extends TestCase
     public function testInitEmptyList(): void
     {
         $input  = [];
-        $result = Arrays::init($input);
+        $result = init($input);
 
         $this->assertSame([], $result);
     }
