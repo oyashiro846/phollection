@@ -23,7 +23,8 @@
             "src/head_option.php",
             "src/last_option.php",
             "src/intersect.php",
-            "src/map_keys.php"
+            "src/map_keys.php",
+            "src/merge.php"
         ]
     },
     "autoload-dev": {
