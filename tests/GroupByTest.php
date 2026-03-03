@@ -14,7 +14,7 @@ final class GroupByTest extends TestCase
 
         $result = group_by(
             $input,
-            fn (int $value, int $index): string => $value % 2 === 0 ? 'even' : 'odd',
+            fn ($value, $index): string => 'even',
         );
 
         $this->assertSame([], $result);
