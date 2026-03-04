@@ -13,6 +13,7 @@
         "files": [
             "src/filter.php",
             "src/any.php",
+            "src/group_by.php",
             "src/tail.php",
             "src/init.php",
             "src/collect.php",
