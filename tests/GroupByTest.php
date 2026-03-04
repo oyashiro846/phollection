@@ -49,6 +49,23 @@ final class GroupByTest extends TestCase
         ], $result);
     }
 
+    public function testGroupByWithIntegerGroupKeys(): void
+    {
+        $input = [10, 25, 30, 42];
+
+        $result = group_by(
+            $input,
+            fn (int $v, int $index): int => intdiv($v, 10),
+        );
+
+        $this->assertSame([
+            1 => [10],
+            2 => [25],
+            3 => [30],
+            4 => [42],
+        ], $result);
+    }
+
     public function testGroupByOnAssocInputPreservesKeysInEachGroup(): void
     {
         $input = [
