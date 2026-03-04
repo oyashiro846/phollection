@@ -24,9 +24,7 @@ function group_by(array $input, callable $classifier): array
     foreach ($input as $key => $value) {
         $groupKey = $classifier($value, $key);
 
-        if (!\array_key_exists($groupKey, $result)) {
-            $result[$groupKey] = [];
-        }
+        $result[$groupKey] ??= [];
 
         if ($isList) {
             $result[$groupKey][] = $value;
