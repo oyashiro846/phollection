@@ -121,6 +121,16 @@ final class FilterTest extends TestCase
         $this->assertSame(['b' => 20], $op(['a' => 5, 'b' => 20]));
     }
 
+    public function testFilterAcceptsEmptyArray(): void
+    {
+        // 空配列リテラルを渡す経路は non-empty 系の型を入れると壊れやすいので固定する。
+        $callback = static fn (int $v, int|string $k): bool => $v % 2 === 0;
+
+        $this->assertSame([], filter($callback)([]));
+        $this->assertSame([], filter($callback, Mode::MODE_LIST)([]));
+        $this->assertSame([], filter($callback, Mode::MODE_ASSOC)([]));
+    }
+
     #[RequiresPhp('>= 8.5')]
     public function testFilterWorksWithPipeOperator(): void
     {

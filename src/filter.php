@@ -20,7 +20,7 @@ namespace Oyashiro846\Phollection;
  *
  * @param callable(V, K): bool $callback フィルターする条件
  * @param TMode $mode
- * @return callable(list<V>|array<K, V>): (list<V>|array<K, V>)
+ * @return callable(array<K, V>): (list<V>|array<K, V>)
  * @phpstan-return ShapeOp<K, V, Preserve, Preserve, TMode>
  */
 function filter(callable $callback, Mode $mode = Mode::MODE_AUTO): callable

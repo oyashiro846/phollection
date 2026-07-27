@@ -31,7 +31,7 @@ final readonly class ShapeOp
      * @template TK of K
      * @template TV of V
      *
-     * @param list<TV>|array<TK, TV> $input 対象の配列
+     * @param array<TK&K, TV> $input 対象の配列
      * @return list<mixed>|array<array-key, mixed>
      * @phpstan-return (I is Preserve
      *     ? (TMode is Mode::MODE_LIST
@@ -51,8 +51,12 @@ final readonly class ShapeOp
      */
     public function __invoke(array $input): array
     {
-        // TK / I は __invoke 側のテンプレートとクラス側のテンプレートに分かれており、
-        // PHPStan は array<TK, TV> と array<K, V> を繋げないため再アサーションする。
+        // $input のキー型を TK と K の交差にしているのは、@template TK of K の bound が
+        // @param の照合では効かず、K に string を要求する callback へ list を渡せてしまうため。
+        // 交差させると PHPStan が K 側の適合も検査する (tests/types/filter.php の負のテスト)。
+        //
+        // TK / I は __invoke 側とクラス側のテンプレートに分かれており、PHPStan は
+        // array<TK, TV> と array<K, V> を繋げないため $apply を再アサーションする。
         // I は array-key|Preserve なのでキーに置くときは array-key と交差させる。
         /** @var \Closure(list<TV>|array<TK, TV>, Mode): (list<mixed>|array<TK, mixed>|array<I&array-key, mixed>) $apply */
         $apply = $this->apply;

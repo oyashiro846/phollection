@@ -35,4 +35,12 @@ function assertFilterTypes(): void
 
     assertType('list<int>', filter($unary)($list));
     assertType('array<string, int>', filter($unary)($assoc));
+
+    // 負のテスト: string キーしか受け取れない callback に list を渡す呼び出しは
+    // 静的に拒否されなければならない。拒否できなくなると未使用の ignore として
+    // level 10 が落ちるので、これが退行の検出器になる。
+    $stringKeyOnly = static fn (int $v, string $k): bool => $v > 1;
+
+    /** @phpstan-ignore argument.type, argument.templateType */
+    $rejected = filter($stringKeyOnly, Mode::MODE_ASSOC)($list);
 }
