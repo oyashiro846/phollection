@@ -53,7 +53,6 @@ final class HeadOptionTest extends TestCase
         $input  = [];
         $result = head_option($input);
 
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
     }
 
