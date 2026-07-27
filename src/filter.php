@@ -31,18 +31,17 @@ function filter(callable $callback, Mode $mode = Mode::MODE_AUTO): callable
             // $value は TV ($input 由来) だが PHPStan は callable の引数を不変扱いするため
             // 証明できない。キー側も TK なので array-key に緩める。
             /** @var callable(mixed, array-key): bool $cb */
-            $cb     = $callback;
+            $cb = $callback;
+
+            if ($resolved === Mode::MODE_ASSOC) {
+                return array_filter($input, $cb, ARRAY_FILTER_USE_BOTH);
+            }
+
             $result = [];
 
             foreach ($input as $key => $value) {
-                if (!$cb($value, $key)) {
-                    continue;
-                }
-
-                if ($resolved === Mode::MODE_LIST) {
+                if ($cb($value, $key)) {
                     $result[] = $value;
-                } else {
-                    $result[$key] = $value;
                 }
             }
 
