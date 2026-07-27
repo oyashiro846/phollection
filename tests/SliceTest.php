@@ -67,4 +67,23 @@ final class SliceTest extends TestCase
         $result = slice([], 0, 10);
         $this->assertSame([], $result);
     }
+
+    public function testSliceAssocWithListModeReturnsFullList(): void
+    {
+        $input = [
+            'a' => 1,
+            'b' => 2,
+            'c' => 3,
+        ];
+        $result = slice($input, 0, 3, Mode::MODE_LIST);
+
+        $this->assertSame([1, 2, 3], $result);
+    }
+
+    public function testSliceListWithAssocModePreservesKeys(): void
+    {
+        $result = slice([10, 20, 30], 1, null, Mode::MODE_ASSOC);
+
+        $this->assertSame([1 => 20, 2 => 30], $result);
+    }
 }

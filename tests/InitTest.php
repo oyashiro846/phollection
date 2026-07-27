@@ -80,4 +80,20 @@ final class InitTest extends TestCase
 
         $this->assertSame([], $result);
     }
+
+    public function testInitAssocWithListModeReturnsFullList(): void
+    {
+        $input  = ['a' => 1, 'b' => 2, 'c' => 3];
+        $result = init($input, Mode::MODE_LIST);
+
+        $this->assertSame([1, 2], $result);
+    }
+
+    public function testInitListWithAssocModePreservesKeys(): void
+    {
+        $input  = [1, 2, 3];
+        $result = init($input, Mode::MODE_ASSOC);
+
+        $this->assertSame([0 => 1, 1 => 2], $result);
+    }
 }

@@ -11,10 +11,6 @@ namespace Oyashiro846\Phollection;
  * @template V
  *
  * @param list<V>|array<K, V> $input 対象の配列
- * @phpstan-param ($mode is Mode::MODE_LIST ? list<V> :
- *   ($mode is Mode::MODE_ASSOC ? array<K, V> :
- *     list<V>|array<K, V>
- * )) $input
  * @return list<V>|array<K, V>
  * @phpstan-return ($mode is Mode::MODE_LIST ? list<V> :
  *     ($mode is Mode::MODE_ASSOC ? array<K, V> :
@@ -24,10 +20,8 @@ namespace Oyashiro846\Phollection;
  */
 function init(array $input, Mode $mode = Mode::MODE_AUTO): array
 {
-    return \array_slice(
-        $input,
-        0,
-        -1,
-        Mode::check_mode($mode, $input) === Mode::MODE_ASSOC,
-    );
+    $mode  = Mode::check_mode($mode, $input);
+    $slice = \array_slice($input, 0, -1, true);
+
+    return $mode === Mode::MODE_LIST ? array_values($slice) : $slice;
 }

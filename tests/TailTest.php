@@ -63,4 +63,20 @@ final class TailTest extends TestCase
 
         $this->assertSame([20 => 2, 30 => 3], $result);
     }
+
+    public function testTailAssocWithListModeReturnsFullList(): void
+    {
+        $input  = ['a' => 1, 'b' => 2, 'c' => 3];
+        $result = tail($input, Mode::MODE_LIST);
+
+        $this->assertSame([2, 3], $result);
+    }
+
+    public function testTailListWithAssocModePreservesKeys(): void
+    {
+        $input  = [1, 2, 3];
+        $result = tail($input, Mode::MODE_ASSOC);
+
+        $this->assertSame([1 => 2, 2 => 3], $result);
+    }
 }
