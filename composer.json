@@ -25,7 +25,8 @@
             "src/last_option.php",
             "src/intersect.php",
             "src/map_keys.php",
-            "src/chunk_by.php"
+            "src/chunk_by.php",
+            "src/find_option.php"
         ]
     },
     "autoload-dev": {
