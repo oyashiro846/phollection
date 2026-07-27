@@ -26,7 +26,8 @@
             "src/intersect.php",
             "src/map_keys.php",
             "src/chunk_by.php",
-            "src/take_while.php"
+            "src/take_while.php",
+            "src/drop_while.php"
         ]
     },
     "autoload-dev": {
