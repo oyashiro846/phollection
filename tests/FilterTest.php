@@ -75,6 +75,23 @@ final class FilterTest extends TestCase
         $this->assertSame([2, 3], $result);
     }
 
+    public function testFilterAssocWithListModeStillPassesOriginalKeysToCallback(): void
+    {
+        // キーを捨てるのは出力側だけで、 callback には元の文字列キーが渡る。
+        $seenKeys = [];
+
+        $callback = static function (int $value, int|string $key) use (&$seenKeys): bool {
+            $seenKeys[] = $key;
+
+            return $value > 1;
+        };
+
+        $result = filter($callback, Mode::MODE_LIST)(['a' => 1, 'b' => 2, 'c' => 3]);
+
+        $this->assertSame(['a', 'b', 'c'], $seenKeys);
+        $this->assertSame([2, 3], $result);
+    }
+
     public function testFilterListWithAssocModeKeepsOriginalIndexes(): void
     {
         // MODE_ASSOC は入力が list でもキーを維持するため、 要素が減っても添字を詰めない。
