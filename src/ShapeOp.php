@@ -18,7 +18,7 @@ namespace Oyashiro846\Phollection;
 final readonly class ShapeOp
 {
     /**
-     * @param \Closure(list<V>|array<K, V>, Mode): (list<mixed>|array<array-key, mixed>) $apply 解決済み mode を受けて実処理を行う
+     * @param \Closure(list<V>|array<K, V>, Mode::MODE_LIST|Mode::MODE_ASSOC): (list<mixed>|array<array-key, mixed>) $apply 解決済み mode を受けて実処理を行う
      * @param TMode $mode
      */
     public function __construct(
@@ -58,7 +58,7 @@ final readonly class ShapeOp
         // TK / I は __invoke 側とクラス側のテンプレートに分かれており、PHPStan は
         // array<TK, TV> と array<K, V> を繋げないため $apply を再アサーションする。
         // I は array-key|Preserve なのでキーに置くときは array-key と交差させる。
-        /** @var \Closure(list<TV>|array<TK, TV>, Mode): (list<mixed>|array<TK, mixed>|array<I&array-key, mixed>) $apply */
+        /** @var \Closure(list<TV>|array<TK, TV>, Mode::MODE_LIST|Mode::MODE_ASSOC): (list<mixed>|array<TK, mixed>|array<I&array-key, mixed>) $apply */
         $apply = $this->apply;
 
         return $apply($input, Mode::check_mode($this->mode, $input));
