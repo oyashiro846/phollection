@@ -23,7 +23,8 @@ function slice(
     ?int $length = null,
     Mode $mode = Mode::MODE_AUTO,
 ): array {
-    $mode = Mode::check_mode($mode, $input);
+    $mode  = Mode::check_mode($mode, $input);
+    $slice = \array_slice($input, $offset, $length, true);
 
-    return \array_slice($input, $offset, $length, $mode === Mode::MODE_ASSOC);
+    return $mode === Mode::MODE_LIST ? array_values($slice) : $slice;
 }
