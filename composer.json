@@ -4,34 +4,20 @@
     "type": "library",
     "license": "MIT",
     "require": {
-      "php": ">=8.4"
+        "php": ">=8.4"
     },
     "autoload": {
         "psr-4": {
             "Oyashiro846\\Phollection\\": "src/"
         },
         "files": [
-            "src/filter.php",
-            "src/any.php",
-            "src/group_by.php",
-            "src/tail.php",
-            "src/init.php",
-            "src/collect.php",
-            "src/slice.php",
-            "src/unique.php",
-            "src/reduce.php",
-            "src/map.php",
-            "src/head_option.php",
-            "src/last_option.php",
-            "src/intersect.php",
-            "src/map_keys.php",
-            "src/chunk_by.php"
+            "src/_functions.php"
         ]
     },
     "autoload-dev": {
-      "psr-4": {
-        "Oyashiro846\\Phollection\\": "tests/"
-      }
+        "psr-4": {
+            "Oyashiro846\\Phollection\\": "tests/"
+        }
     },
     "authors": [
         {
