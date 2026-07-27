@@ -62,6 +62,19 @@ final class WindowedTest extends TestCase
         $this->assertSame([], windowed($input, 3, 1, true));
     }
 
+    /**
+     * 空配列リテラルを変数に入れず直接渡す呼び出しです。
+     *
+     * 戻り値の assoc 側を non-empty-array<K, V> にすると non-empty-array<never, never> が解決できず、
+     * この形の呼び出しだけが PHPStan で落ちます。その回帰を捕まえるために各モードで呼びます。
+     */
+    public function testWindowedOnEmptyArrayLiteralReturnsEmptyInEveryMode(): void
+    {
+        $this->assertSame([], windowed([], 2));
+        $this->assertSame([], windowed([], 2, 1, false, Mode::MODE_LIST));
+        $this->assertSame([], windowed([], 2, 1, false, Mode::MODE_ASSOC));
+    }
+
     public function testWindowedWithSizeOneReturnsSingletonWindows(): void
     {
         $input = [1, 2, 3];
@@ -95,7 +108,7 @@ final class WindowedTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('$size は 1 以上である必要があります。');
 
-        windowed([1, 2, 3], 0);
+        windowed([1, 2, 3], $this->invalidPositiveInt(0));
     }
 
     public function testWindowedWithNegativeSizeThrows(): void
@@ -103,7 +116,7 @@ final class WindowedTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('$size は 1 以上である必要があります。');
 
-        windowed([1, 2, 3], -1);
+        windowed([1, 2, 3], $this->invalidPositiveInt(-1));
     }
 
     public function testWindowedWithZeroStepThrows(): void
@@ -111,7 +124,7 @@ final class WindowedTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('$step は 1 以上である必要があります。');
 
-        windowed([1, 2, 3], 2, 0);
+        windowed([1, 2, 3], 2, $this->invalidPositiveInt(0));
     }
 
     public function testWindowedWithNegativeStepThrows(): void
@@ -119,7 +132,7 @@ final class WindowedTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('$step は 1 以上である必要があります。');
 
-        windowed([1, 2, 3], 2, -1);
+        windowed([1, 2, 3], 2, $this->invalidPositiveInt(-1));
     }
 
     public function testWindowedOnAssocInputPreservesKeysInEachWindow(): void
@@ -170,5 +183,22 @@ final class WindowedTest extends TestCase
         windowed($input, 2, 1, true, Mode::MODE_LIST);
 
         $this->assertSame(['alice' => 20, 'bob' => 17, 'carol' => 23], $input);
+    }
+
+    /**
+     * 実行時の防御を検証するために不正な $size / $step を作ります。
+     *
+     * windowed は $size / $step に positive-int を宣言しているため 0 や負数を直接渡すと静的解析で弾かれますが、
+     * phpdoc の型は実行時には強制されないので、ライブラリ利用者は不正値を渡せてしまいます。
+     * その状況を再現するため、int を経由して positive-int として扱わせます。
+     *
+     * @return positive-int
+     */
+    private function invalidPositiveInt(int $value): int
+    {
+        /** @var positive-int $widened */
+        $widened = $value;
+
+        return $widened;
     }
 }

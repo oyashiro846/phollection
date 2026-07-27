@@ -11,13 +11,13 @@ namespace Oyashiro846\Phollection;
  * @template V
  *
  * @param list<V>|array<K, V> $input 対象の配列
- * @param int $size 1 つのチャンクに含める要素数（1 以上）
+ * @param positive-int $size 1 つのチャンクに含める要素数（1 以上）
  * @param Mode $mode MODE_LIST のときは各チャンク内を 0 始まりの連番にし、MODE_ASSOC のときは元のキーを保持する。MODE_AUTO のときは入力に応じて判定する
  * @throws \InvalidArgumentException $size が 1 未満のとき
- * @return list<list<V>|array<K, V>>
- * @phpstan-return ($mode is Mode::MODE_LIST ? list<list<V>> :
+ * @return list<non-empty-list<V>|array<K, V>> 空のチャンクは作らないので list 側は non-empty-list だが、assoc 側は non-empty-array<never, never> が解決できず空配列リテラルを渡す呼び出しを壊すため non-empty を付けない
+ * @phpstan-return ($mode is Mode::MODE_LIST ? list<non-empty-list<V>> :
  *     ($mode is Mode::MODE_ASSOC ? list<array<K, V>> :
- *       ($input is list<V> ? list<list<V>> :
+ *       ($input is list<V> ? list<non-empty-list<V>> :
  *         list<array<K, V>>
  *  )))
  */
