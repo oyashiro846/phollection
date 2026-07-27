@@ -23,7 +23,7 @@ $nums = [1, 2, 3, 4];
 
 $result = Arrays::map($nums, fn (int $v) => $v * 2);
 
-assert([2, 4, 6, 8], $result);
+assert($result === [2, 4, 6, 8]);
 ```
 
 `filter` のように callback を先に受け取る関数は、 配列を受け取る callable を返します。
@@ -38,7 +38,7 @@ $nums = [1, 2, 3, 4];
 
 $result = $nums |> filter(fn (int $v): bool => $v % 2 === 0);
 
-assert([2, 4], $result);
+assert($result === [2, 4]);
 ```
 
 ## 設計思想 (Design Philosophy)
