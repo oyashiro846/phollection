@@ -26,6 +26,21 @@ $result = Arrays::map($nums, fn (int $v) => $v * 2);
 assert([2, 4, 6, 8], $result);
 ```
 
+`filter` のように callback を先に受け取る関数は、 配列を受け取る callable を返します。
+PHP 8.5 のパイプ演算子の右辺にそのまま置けます。
+
+```php
+<?php
+
+use function Oyashiro846\Phollection\filter;
+
+$nums = [1, 2, 3, 4];
+
+$result = $nums |> filter(fn (int $v): bool => $v % 2 === 0);
+
+assert([2, 4], $result);
+```
+
 ## 設計思想 (Design Philosophy)
 
 ### 標準配列のみ
