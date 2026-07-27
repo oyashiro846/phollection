@@ -53,7 +53,6 @@ final class LastOptionTest extends TestCase
         $input  = [];
         $result = last_option($input);
 
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
     }
 
