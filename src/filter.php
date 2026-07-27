@@ -5,39 +5,51 @@ declare(strict_types=1);
 namespace Oyashiro846\Phollection;
 
 /**
- * 配列を条件でフィルタします。
+ * 配列を条件でフィルタする操作を返します。
+ *
+ * 戻り値は $input を受け取る callable です。そのまま呼び出すか、PHP 8.5 のパイプ演算子の
+ * 右辺に置いてください。
+ *
+ * ```
+ * $adults = $users |> filter(fn (User $u): bool => $u->age >= 20);
+ * ```
  *
  * @template K of array-key
  * @template V
+ * @template TMode of Mode
  *
- * @param list<V>|array<K, V> $input 対象の配列
  * @param callable(V, K): bool $callback フィルターする条件
- * @phpstan-param ($mode is Mode::MODE_LIST ? list<V> :
- *   ($mode is Mode::MODE_ASSOC ? array<K, V> :
- *     list<V>|array<K, V>
- * )) $input
- * @return list<V>|array<K, V>
- * @phpstan-return ($mode is Mode::MODE_LIST ? list<V> :
- *     ($mode is Mode::MODE_ASSOC ? array<K, V>:
- *       ($input is list<V> ? list<V> :
- *         array<K, V>
- *  )))
+ * @param TMode $mode
+ * @return callable(list<V>|array<K, V>): (list<V>|array<K, V>)
+ * @phpstan-return ShapeOp<K, V, Preserve, Preserve, TMode>
  */
-function filter(array $input, callable $callback, Mode $mode = Mode::MODE_AUTO): array
+function filter(callable $callback, Mode $mode = Mode::MODE_AUTO): callable
 {
-    $mode = Mode::check_mode($mode, $input);
+    /** @var ShapeOp<K, V, Preserve, Preserve, TMode> $op */
+    $op = new ShapeOp(
+        static function (array $input, Mode $resolved) use ($callback): array {
+            // $value は TV ($input 由来) だが PHPStan は callable の引数を不変扱いするため
+            // 証明できない。キー側も TK なので array-key に緩める。
+            /** @var callable(mixed, array-key): bool $cb */
+            $cb     = $callback;
+            $result = [];
 
-    if ($mode === Mode::MODE_ASSOC) {
-        return array_filter($input, $callback, ARRAY_FILTER_USE_BOTH);
-    }
+            foreach ($input as $key => $value) {
+                if (!$cb($value, $key)) {
+                    continue;
+                }
 
-    $result = [];
+                if ($resolved === Mode::MODE_LIST) {
+                    $result[] = $value;
+                } else {
+                    $result[$key] = $value;
+                }
+            }
 
-    foreach ($input as $key => $value) {
-        if ($callback($value, $key)) {
-            $result[] = $value;
-        }
-    }
+            return $result;
+        },
+        $mode,
+    );
 
-    return $result;
+    return $op;
 }
