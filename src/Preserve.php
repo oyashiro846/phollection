@@ -10,10 +10,14 @@ namespace Oyashiro846\Phollection;
  * `ShapeOp` の型パラメータ `I` / `E` に渡して使います。`I` に渡すと入力のキー型を保存し、
  * `E` に渡すと入力の値型を保存します。
  *
- * インスタンス化しません。型パラメータの位置に置くためだけに存在します。
+ * 型パラメータの位置に置くためだけに存在するので、コンストラクタを private にして
+ * インスタンス化を塞いでいます。
  *
  * @internal
  */
 final class Preserve
 {
+    private function __construct()
+    {
+    }
 }
