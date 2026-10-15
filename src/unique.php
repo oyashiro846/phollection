@@ -41,15 +41,22 @@ function unique(
         $seen   = [];
         $result = [];
 
-        foreach ($input as $key => $value) {
-            $hash = _unique_get_strict_hash($value);
+        // $mode はループ中に変わらないので、 要素ごとに比較せずループを分ける
+        if ($mode === Mode::MODE_LIST) {
+            foreach ($input as $value) {
+                $hash = _unique_get_strict_hash($value);
 
-            if (!isset($seen[$hash])) {
-                $seen[$hash] = true;
+                if (!isset($seen[$hash])) {
+                    $seen[$hash] = true;
+                    $result[]    = $value;
+                }
+            }
+        } else {
+            foreach ($input as $key => $value) {
+                $hash = _unique_get_strict_hash($value);
 
-                if ($mode === Mode::MODE_LIST) {
-                    $result[] = $value;
-                } else {
+                if (!isset($seen[$hash])) {
+                    $seen[$hash]  = true;
                     $result[$key] = $value;
                 }
             }

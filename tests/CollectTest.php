@@ -33,6 +33,19 @@ final class CollectTest extends TestCase
         $this->assertSame([21], $result);
     }
 
+    public function test_collect_list_with_assoc_mode_keeps_keys(): void
+    {
+        $input = [10, 20, 30, 40];
+
+        $result = collect(
+            $input,
+            fn (int $v, int $i): ?int => $i % 2 === 1 ? $v + 1 : null,
+            Mode::MODE_ASSOC,
+        );
+
+        $this->assertSame([1 => 21, 3 => 41], $result);
+    }
+
     public function test_collect_assoc_auto_mode(): void
     {
         $input = [
