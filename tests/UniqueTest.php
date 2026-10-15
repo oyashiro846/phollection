@@ -57,6 +57,13 @@ final class UniqueTest extends TestCase
         $this->assertSame(['3', '1', '4', '5', '9', '2'], $result);
     }
 
+    public function testUniqueListWithStrictWithAssocModeKeepsKeys(): void
+    {
+        $result = unique(['3', '1', '4', '1', '5', '3'], strict: true, mode: Mode::MODE_ASSOC);
+
+        $this->assertSame([0 => '3', 1 => '1', 2 => '4', 4 => '5'], $result);
+    }
+
     public function testUniqueObjectWithStrictWithAutoMode(): void
     {
         $obj1     = new \stdClass();

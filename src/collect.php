@@ -26,19 +26,26 @@ namespace Oyashiro846\Phollection;
  */
 function collect(array $input, callable $callback, Mode $mode = Mode::MODE_AUTO): array
 {
-    $mode = Mode::check_mode($mode, $input);
-
     $result = [];
+
+    // $mode はループ中に変わらないので、 要素ごとに比較せずループを分ける
+    if (Mode::check_mode($mode, $input) === Mode::MODE_LIST) {
+        foreach ($input as $key => $value) {
+            $element = $callback($value, $key);
+
+            if ($element !== null) {
+                $result[] = $element;
+            }
+        }
+
+        return $result;
+    }
 
     foreach ($input as $key => $value) {
         $element = $callback($value, $key);
 
-        if (!\is_null($element)) {
-            if ($mode === Mode::MODE_LIST) {
-                $result[] = $element;
-            } elseif ($mode === Mode::MODE_ASSOC) {
-                $result[$key] = $element;
-            }
+        if ($element !== null) {
+            $result[$key] = $element;
         }
     }
 
